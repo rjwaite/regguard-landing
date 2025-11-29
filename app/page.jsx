@@ -28,7 +28,6 @@ export default function Home() {
       
       if (supabaseError) {
         if (supabaseError.code === '23505') {
-          // Duplicate email - still show success (don't reveal if email exists)
           setSubmitted(true)
         } else {
           throw supabaseError
@@ -126,72 +125,43 @@ export default function Home() {
     { q: 'Is there a free trial?', a: 'Yes! All paid plans include a 14-day free trial with full access to features. No credit card required to start.' }
   ]
 
-  const EmailForm = ({ location }) => (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', marginBottom: location === 'hero' ? '28px' : '0' }}>
-      {!submitted ? (
-        <>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your work email"
-            required
-            disabled={loading}
-            style={{
-              flex: 1,
-              padding: location === 'hero' ? '14px 18px' : '16px 20px',
-              borderRadius: location === 'hero' ? '10px' : '12px',
-              fontSize: location === 'hero' ? '14px' : '15px',
-              color: '#e2e8f0',
-              background: 'rgba(15, 23, 42, 0.8)',
-              border: '1px solid rgba(71, 85, 105, 0.4)',
-              outline: 'none',
-              transition: 'all 0.3s ease',
-              opacity: loading ? 0.7 : 1
-            }}
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              padding: location === 'hero' ? '14px 28px' : '16px 28px',
-              borderRadius: location === 'hero' ? '10px' : '12px',
-              border: 'none',
-              color: 'white',
-              fontSize: location === 'hero' ? '14px' : '15px',
-              fontWeight: 600,
-              cursor: loading ? 'wait' : 'pointer',
-              whiteSpace: 'nowrap',
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-              boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)',
-              transition: 'all 0.3s ease',
-              opacity: loading ? 0.7 : 1
-            }}
-          >
-            {loading ? 'Joining...' : (location === 'hero' ? 'Request Access →' : 'Join Waitlist →')}
-          </button>
-        </>
-      ) : (
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          padding: location === 'hero' ? '14px 20px' : '16px 24px',
-          borderRadius: location === 'hero' ? '10px' : '12px',
-          background: 'rgba(16, 185, 129, 0.15)',
-          border: '1px solid rgba(16, 185, 129, 0.3)'
-        }}>
-          <svg width={location === 'hero' ? '20' : '22'} height={location === 'hero' ? '20' : '22'} viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-            <polyline points="22 4 12 14.01 9 11.01"/>
-          </svg>
-          <span style={{ color: '#10b981', fontWeight: 500, fontSize: location === 'hero' ? '14px' : '15px' }}>
-            {location === 'hero' ? "You're on the list! We'll be in touch soon." : "You're on the list!"}
-          </span>
-        </div>
-      )}
-    </form>
-  )
+  const inputStyle = {
+    flex: 1,
+    padding: '14px 18px',
+    borderRadius: '10px',
+    fontSize: '14px',
+    color: '#e2e8f0',
+    background: 'rgba(15, 23, 42, 0.8)',
+    border: '1px solid rgba(71, 85, 105, 0.4)',
+    outline: 'none',
+    transition: 'all 0.3s ease',
+    opacity: loading ? 0.7 : 1
+  }
+
+  const buttonStyle = {
+    padding: '14px 28px',
+    borderRadius: '10px',
+    border: 'none',
+    color: 'white',
+    fontSize: '14px',
+    fontWeight: 600,
+    cursor: loading ? 'wait' : 'pointer',
+    whiteSpace: 'nowrap',
+    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+    boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)',
+    transition: 'all 0.3s ease',
+    opacity: loading ? 0.7 : 1
+  }
+
+  const successBoxStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    padding: '14px 20px',
+    borderRadius: '10px',
+    background: 'rgba(16, 185, 129, 0.15)',
+    border: '1px solid rgba(16, 185, 129, 0.3)'
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#050810', fontFamily: "'Inter', system-ui, sans-serif", color: '#e2e8f0', overflow: 'hidden' }}>
@@ -239,7 +209,35 @@ export default function Home() {
             Monitor federal regulations, analyze compliance impact, and generate public comments in seconds. Stay ahead of regulatory changes that matter to your business.
           </p>
           
-          <EmailForm location="hero" />
+          {/* Hero Email Form - Inline */}
+          <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', marginBottom: '28px' }}>
+            {!submitted ? (
+              <>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your work email"
+                  required
+                  disabled={loading}
+                  style={inputStyle}
+                />
+                <button type="submit" disabled={loading} style={buttonStyle}>
+                  {loading ? 'Joining...' : 'Request Access →'}
+                </button>
+              </>
+            ) : (
+              <div style={successBoxStyle}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <span style={{ color: '#10b981', fontWeight: 500, fontSize: '14px' }}>
+                  You&apos;re on the list! We&apos;ll be in touch soon.
+                </span>
+              </div>
+            )}
+          </form>
           
           {error && (
             <p style={{ color: '#ef4444', fontSize: '14px', marginTop: '-20px', marginBottom: '20px' }}>{error}</p>
@@ -364,7 +362,7 @@ export default function Home() {
                   </div>
                   <button style={{ width: '100%', padding: '14px', borderRadius: '10px', border: plan.highlight ? 'none' : '1px solid rgba(255,255,255,0.15)', background: plan.highlight ? 'linear-gradient(135deg, #10b981, #059669)' : 'rgba(255,255,255,0.05)', color: 'white', fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginBottom: '28px', boxShadow: plan.highlight ? '0 4px 16px rgba(16, 185, 129, 0.4)' : 'none', transition: 'all 0.2s ease' }}>{plan.cta}</button>
                   <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 16px 0', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>What's included</p>
+                    <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 16px 0', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>What&apos;s included</p>
                     <ul style={{ listStyle: 'none', padding: 0, margin: 0, flex: 1 }}>
                       {plan.features.map((feature, j) => (
                         <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', fontSize: '13px', color: feature.included ? '#cbd5e1' : '#475569', borderBottom: j < plan.features.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
@@ -415,9 +413,34 @@ export default function Home() {
         <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto' }}>
           <h2 style={{ fontSize: '42px', fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 20px 0' }}>Ready to transform your <span className="gradient-text">regulatory workflow?</span></h2>
           <p style={{ fontSize: '16px', color: '#94a3b8', margin: '0 0 32px 0' }}>Join 500+ government affairs professionals already on the waitlist.</p>
-          <div style={{ display: 'flex', justifyContent: 'center', maxWidth: '460px', margin: '0 auto' }}>
-            <EmailForm location="cta" />
-          </div>
+          
+          {/* Bottom CTA Form - Inline */}
+          <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', justifyContent: 'center', maxWidth: '460px', margin: '0 auto' }}>
+            {!submitted ? (
+              <>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your work email"
+                  required
+                  disabled={loading}
+                  style={{ ...inputStyle, padding: '16px 20px', borderRadius: '12px', fontSize: '15px' }}
+                />
+                <button type="submit" disabled={loading} style={{ ...buttonStyle, padding: '16px 28px', borderRadius: '12px', fontSize: '15px' }}>
+                  {loading ? 'Joining...' : 'Join Waitlist →'}
+                </button>
+              </>
+            ) : (
+              <div style={{ ...successBoxStyle, padding: '16px 24px', borderRadius: '12px' }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <span style={{ color: '#10b981', fontWeight: 500 }}>You&apos;re on the list!</span>
+              </div>
+            )}
+          </form>
         </div>
       </section>
 
