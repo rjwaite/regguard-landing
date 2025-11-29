@@ -75,7 +75,7 @@ export default function Home() {
         { text: 'API access', included: false },
         { text: 'Priority support', included: false },
       ],
-      cta: 'Start Free Trial'
+      cta: 'Coming Soon'
     },
     {
       name: 'Professional',
@@ -95,7 +95,7 @@ export default function Home() {
         { text: 'Comment analytics', included: true },
         { text: 'Priority support', included: true },
       ],
-      cta: 'Start Free Trial'
+      cta: 'Coming Soon'
     },
     {
       name: 'Enterprise',
