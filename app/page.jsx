@@ -360,7 +360,11 @@ export default function Home() {
                       </>
                     )}
                   </div>
-                  <button style={{ width: '100%', padding: '14px', borderRadius: '10px', border: plan.highlight ? 'none' : '1px solid rgba(255,255,255,0.15)', background: plan.highlight ? 'linear-gradient(135deg, #10b981, #059669)' : 'rgba(255,255,255,0.05)', color: 'white', fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginBottom: '28px', boxShadow: plan.highlight ? '0 4px 16px rgba(16, 185, 129, 0.4)' : 'none', transition: 'all 0.2s ease' }}>{plan.cta}</button>
+                  {plan.cta === 'Contact Sales' ? (
+                    <a href="/contact" style={{ display: 'block', width: '100%', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.05)', color: 'white', fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginBottom: '28px', textAlign: 'center', textDecoration: 'none', transition: 'all 0.2s ease' }}>{plan.cta}</a>
+                  ) : (
+                    <button style={{ width: '100%', padding: '14px', borderRadius: '10px', border: plan.highlight ? 'none' : '1px solid rgba(255,255,255,0.15)', background: plan.highlight ? 'linear-gradient(135deg, #10b981, #059669)' : 'rgba(255,255,255,0.05)', color: 'white', fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginBottom: '28px', boxShadow: plan.highlight ? '0 4px 16px rgba(16, 185, 129, 0.4)' : 'none', transition: 'all 0.2s ease' }}>{plan.cta}</button>
+                  )}
                   <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 16px 0', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>What&apos;s included</p>
                     <ul style={{ listStyle: 'none', padding: 0, margin: 0, flex: 1 }}>
@@ -387,7 +391,7 @@ export default function Home() {
               <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 8px 0' }}>Need a custom solution?</h3>
               <p style={{ fontSize: '14px', color: '#94a3b8', margin: 0 }}>We offer tailored plans for large organizations with specific compliance needs, custom integrations, and dedicated support.</p>
             </div>
-            <button style={{ padding: '14px 28px', borderRadius: '10px', border: '1px solid rgba(16, 185, 129, 0.5)', background: 'transparent', color: '#10b981', fontSize: '14px', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.2s ease' }}>Talk to Sales →</button>
+            <a href="/contact" style={{ padding: '14px 28px', borderRadius: '10px', border: '1px solid rgba(16, 185, 129, 0.5)', background: 'transparent', color: '#10b981', fontSize: '14px', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.2s ease', textDecoration: 'none' }}>Talk to Sales →</a>
           </div>
         </div>
       </section>
@@ -457,7 +461,7 @@ export default function Home() {
           <div style={{ display: 'flex', gap: '20px' }}>
             <a href="/privacy" style={{ color: '#64748b', textDecoration: 'none', fontSize: '12px' }}>Privacy</a>
             <a href="/terms" style={{ color: '#64748b', textDecoration: 'none', fontSize: '12px' }}>Terms</a>
-            <a href="mailto:hello@regguard.ai" style={{ color: '#64748b', textDecoration: 'none', fontSize: '12px' }}>Contact</a>
+            <a href="/contact" style={{ color: '#64748b', textDecoration: 'none', fontSize: '12px' }}>Contact</a>
           </div>
         </div>
       </footer>

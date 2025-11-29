@@ -231,13 +231,7 @@ export default function Contact() {
           </div>
         )}
 
-        {/* Alternative Contact */}
-        <div style={{ marginTop: '48px', padding: '24px', borderRadius: '12px', background: 'rgba(30, 41, 59, 0.5)', border: '1px solid rgba(255,255,255,0.06)' }}>
-          <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0 }}>
-            Prefer email? Reach us directly at{' '}
-            <a href="mailto:ryanjwaite@gmail.com" style={{ color: '#10b981' }}>ryanjwaite@gmail.com</a>
-          </p>
-        </div>
+
       </main>
 
       {/* Footer */}
