@@ -29,6 +29,7 @@ export default function Contact() {
     setError('')
     
     try {
+      // Save to Supabase
       const { error: supabaseError } = await supabase
         .from('contact_submissions')
         .insert([{ 
@@ -40,13 +41,27 @@ export default function Contact() {
         }])
       
       if (supabaseError) {
-        throw supabaseError
+        console.error('Supabase error:', supabaseError)
       }
+
+      // Send email notification via Formsubmit
+      const emailData = new FormData()
+      emailData.append('name', formData.name.trim())
+      emailData.append('email', formData.email.trim())
+      emailData.append('subject', formData.subject.trim() || 'New Contact Form Submission')
+      emailData.append('message', formData.message.trim())
+      emailData.append('_subject', 'New RegGuard.ai Contact: ' + (formData.subject.trim() || 'General Inquiry'))
+      emailData.append('_template', 'table')
+
+      await fetch('https://formsubmit.co/ajax/ryanjwaite@gmail.com', {
+        method: 'POST',
+        body: emailData
+      })
       
       setSubmitted(true)
     } catch (err) {
       console.error('Error:', err)
-      setError('Something went wrong. Please try again or email us directly.')
+      setError('Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }
