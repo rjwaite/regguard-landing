@@ -9,6 +9,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [billingCycle, setBillingCycle] = useState('annual')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -175,6 +176,29 @@ export default function Home() {
         .pricing-card:hover { transform: translateY(-8px); }
         .nav-link:hover { color: #e2e8f0 !important; }
         html { scroll-behavior: smooth; }
+        .desktop-nav { display: flex; }
+        .mobile-menu-btn { display: none; }
+        .mobile-menu { display: none; }
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+          .mobile-menu { display: flex; }
+          .hero-section { flex-direction: column !important; padding: 100px 20px 40px !important; min-height: auto !important; }
+          .hero-content { max-width: 100% !important; }
+          .hero-content h1 { font-size: 32px !important; }
+          .hero-preview { display: none !important; }
+          .hero-form { flex-direction: column !important; }
+          .hero-form input { width: 100% !important; }
+          .hero-form button { width: 100% !important; }
+          .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .features-grid { grid-template-columns: 1fr !important; }
+          .pricing-grid { grid-template-columns: 1fr !important; }
+          .footer-content { flex-direction: column !important; text-align: center; gap: 24px !important; }
+          .section-title { font-size: 28px !important; }
+          .cta-form { flex-direction: column !important; }
+          .cta-form input { width: 100% !important; }
+          .cta-form button { width: 100% !important; }
+        }
       `}</style>
 
       <div className="hero-gradient" style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }} />
@@ -187,17 +211,66 @@ export default function Home() {
           </div>
           <span style={{ fontSize: '20px', fontWeight: 700 }}>RegGuard<span className="gradient-text">.ai</span></span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+        
+        {/* Desktop Navigation */}
+        <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
           <a href="#features" className="nav-link" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px', fontWeight: 500, transition: 'color 0.2s' }}>Features</a>
           <a href="#pricing" className="nav-link" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px', fontWeight: 500, transition: 'color 0.2s' }}>Pricing</a>
           <a href="#faq" className="nav-link" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px', fontWeight: 500, transition: 'color 0.2s' }}>FAQ</a>
           <a href="#cta" style={{ padding: '10px 20px', borderRadius: '8px', border: 'none', color: 'white', fontSize: '13px', fontWeight: 600, cursor: 'pointer', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)', textDecoration: 'none' }}>Get Beta Access</a>
         </div>
+
+        {/* Mobile Hamburger Button */}
+        <button 
+          className="mobile-menu-btn"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          style={{ display: 'none', alignItems: 'center', justifyContent: 'center', width: '44px', height: '44px', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e2e8f0" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          ) : (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e2e8f0" strokeWidth="2">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          )}
+        </button>
       </nav>
 
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="mobile-menu"
+          style={{ 
+            position: 'fixed', 
+            top: '73px', 
+            left: 0, 
+            right: 0, 
+            bottom: 0,
+            background: 'rgba(5, 8, 16, 0.98)', 
+            backdropFilter: 'blur(20px)',
+            zIndex: 99, 
+            flexDirection: 'column',
+            padding: '32px',
+            gap: '8px'
+          }}
+        >
+          <a href="#features" onClick={() => setMobileMenuOpen(false)} style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '16px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>Features</a>
+          <a href="#pricing" onClick={() => setMobileMenuOpen(false)} style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '16px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>Pricing</a>
+          <a href="#faq" onClick={() => setMobileMenuOpen(false)} style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '16px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>FAQ</a>
+          <a href="/contact" onClick={() => setMobileMenuOpen(false)} style={{ color: '#e2e8f0', textDecoration: 'none', fontSize: '18px', fontWeight: 500, padding: '16px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>Contact</a>
+          <a href="#cta" onClick={() => setMobileMenuOpen(false)} style={{ display: 'inline-block', marginTop: '16px', padding: '14px 24px', borderRadius: '10px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', fontSize: '16px', fontWeight: 600, textDecoration: 'none', textAlign: 'center', boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)' }}>Get Beta Access</a>
+        </div>
+      )}
+
       {/* Hero Section */}
-      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '120px 32px 60px', maxWidth: '1300px', margin: '0 auto', gap: '40px' }}>
-        <div style={{ flex: 1, maxWidth: '560px' }}>
+      <section className="hero-section" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '120px 32px 60px', maxWidth: '1300px', margin: '0 auto', gap: '40px' }}>
+        <div className="hero-content" style={{ flex: 1, maxWidth: '560px' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '100px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', marginBottom: '24px' }}>
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981' }} />
             <span style={{ fontSize: '12px', fontWeight: 500, color: '#10b981' }}>Now accepting beta applications</span>
@@ -210,7 +283,7 @@ export default function Home() {
           </p>
           
           {/* Hero Email Form - Inline */}
-          <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', marginBottom: '28px' }}>
+          <form className="hero-form" onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', marginBottom: '28px' }}>
             {!submitted ? (
               <>
                 <input
@@ -254,7 +327,7 @@ export default function Home() {
         </div>
 
         {/* Preview Window */}
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', animation: 'float 6s ease-in-out infinite' }}>
+        <div className="hero-preview" style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', animation: 'float 6s ease-in-out infinite' }}>
           <div style={{ width: '520px', borderRadius: '16px', overflow: 'hidden', background: 'linear-gradient(165deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95))', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 40px 80px rgba(0,0,0,0.5)', transform: 'rotateY(-3deg)' }}>
             <div style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,0,0,0.3)' }}>
               <div style={{ display: 'flex', gap: '6px' }}><div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }} /><div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }} /><div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e' }} /></div>
@@ -292,7 +365,7 @@ export default function Home() {
 
       {/* Stats */}
       <section style={{ padding: '32px', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'rgba(0,0,0,0.3)' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px' }}>
+        <div className="stats-grid" style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px' }}>
           {stats.map((stat, i) => (
             <div key={i} style={{ textAlign: 'center' }}>
               <p style={{ fontSize: '36px', fontWeight: 800, margin: '0 0 6px 0' }} className="gradient-text">{stat.value}</p>
@@ -305,10 +378,10 @@ export default function Home() {
       {/* Features */}
       <section id="features" style={{ padding: '80px 32px', maxWidth: '1100px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-          <h2 style={{ fontSize: '40px', fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 16px 0' }}>Everything you need to <span className="gradient-text">stay compliant</span></h2>
+          <h2 className="section-title" style={{ fontSize: '40px', fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 16px 0' }}>Everything you need to <span className="gradient-text">stay compliant</span></h2>
           <p style={{ fontSize: '16px', color: '#94a3b8', maxWidth: '500px', margin: '0 auto' }}>From monitoring to analysis to action — RegGuard.ai handles the entire regulatory intelligence workflow.</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+        <div className="features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
           {features.map((feature, i) => (
             <div key={i} className="glass-card" style={{ padding: '28px', borderRadius: '16px', cursor: 'pointer' }}>
               <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.15))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '16px' }}>{feature.icon}</div>
@@ -323,7 +396,7 @@ export default function Home() {
       <section id="pricing" style={{ padding: '100px 32px', background: 'linear-gradient(180deg, transparent 0%, rgba(16, 185, 129, 0.03) 50%, transparent 100%)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <h2 style={{ fontSize: '40px', fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 16px 0' }}>Simple, transparent <span className="gradient-text">pricing</span></h2>
+            <h2 className="section-title" style={{ fontSize: '40px', fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 16px 0' }}>Simple, transparent <span className="gradient-text">pricing</span></h2>
             <p style={{ fontSize: '16px', color: '#94a3b8', maxWidth: '500px', margin: '0 auto 32px' }}>Start free for 14 days. No credit card required. Cancel anytime.</p>
             
             {/* Billing Toggle */}
@@ -337,7 +410,7 @@ export default function Home() {
           </div>
 
           {/* Pricing Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', alignItems: 'stretch' }}>
+          <div className="pricing-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', alignItems: 'stretch' }}>
             {pricingPlans.map((plan, i) => (
               <div key={i} className="pricing-card" style={{ borderRadius: '20px', padding: plan.highlight ? '3px' : '0', background: plan.highlight ? 'linear-gradient(135deg, #10b981, #06b6d4, #3b82f6)' : 'transparent', display: 'flex' }}>
                 <div style={{ borderRadius: plan.highlight ? '18px' : '20px', padding: '32px', background: 'linear-gradient(165deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)', border: plan.highlight ? 'none' : '1px solid rgba(255,255,255,0.08)', position: 'relative', display: 'flex', flexDirection: 'column', flex: 1 }}>
@@ -399,7 +472,7 @@ export default function Home() {
       {/* FAQ Section */}
       <section id="faq" style={{ padding: '80px 32px', maxWidth: '800px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-          <h2 style={{ fontSize: '40px', fontWeight: 800, letterSpacing: '-0.03em', margin: 0 }}>Frequently asked <span className="gradient-text">questions</span></h2>
+          <h2 className="section-title" style={{ fontSize: '40px', fontWeight: 800, letterSpacing: '-0.03em', margin: 0 }}>Frequently asked <span className="gradient-text">questions</span></h2>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {faqs.map((faq, i) => (
@@ -415,11 +488,11 @@ export default function Home() {
       <section id="cta" style={{ padding: '80px 32px', textAlign: 'center', position: 'relative' }}>
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15), transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto' }}>
-          <h2 style={{ fontSize: '42px', fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 20px 0' }}>Ready to transform your <span className="gradient-text">regulatory workflow?</span></h2>
+          <h2 className="section-title" style={{ fontSize: '42px', fontWeight: 800, letterSpacing: '-0.03em', margin: '0 0 20px 0' }}>Ready to transform your <span className="gradient-text">regulatory workflow?</span></h2>
           <p style={{ fontSize: '16px', color: '#94a3b8', margin: '0 0 32px 0' }}>Join 500+ government affairs professionals already on the waitlist.</p>
           
           {/* Bottom CTA Form - Inline */}
-          <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', justifyContent: 'center', maxWidth: '460px', margin: '0 auto' }}>
+          <form className="cta-form" onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', justifyContent: 'center', maxWidth: '460px', margin: '0 auto' }}>
             {!submitted ? (
               <>
                 <input
@@ -450,7 +523,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer style={{ padding: '32px', borderTop: '1px solid rgba(255,255,255,0.05)', background: 'rgba(0,0,0,0.3)' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+        <div className="footer-content" style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #10b981, #059669)' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
